@@ -1,16 +1,20 @@
 package web.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import web.dao.CarDao;
-import web.dao.CarDaoImpl;
 import web.model.Car;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class CarServiceImpl implements CarService {
-    private CarDao dao = new CarDaoImpl();
+    private final CarDao dao;
+
+    public CarServiceImpl(@Qualifier("carDaoImpl") CarDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public List<Car> getCars() {
